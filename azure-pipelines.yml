@@ -12,3 +12,5 @@ jobs:
   parameters:
     packagesToPack: '**/Insights.csproj'
     
+- template: PublishToArtifacts.yml@templates
+    
