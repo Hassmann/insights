@@ -1,9 +1,6 @@
 trigger:
 - main
 
-pool:
-  vmImage: ${{ parameters.vmImage }}
-
 resources:
   repositories:
     - repository: templates
