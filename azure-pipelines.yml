@@ -7,10 +7,14 @@ resources:
       type: git
       name: Fabric/Pipeline
 
-jobs:
-- template: BuildLibrary.yml@templates
-  parameters:
-    packagesToPack: '**/Insights.csproj'
-    
-- template: PublishToArtifacts.yml@templates
+stages:
+  - stage: Build
+    jobs:
+    - template: BuildLibrary.yml@templates
+      parameters:
+        packagesToPack: '**/Insights.csproj'
+
+  - stage: Publish
+    jobs:
+    - template: PublishToArtifacts.yml@templates
     
