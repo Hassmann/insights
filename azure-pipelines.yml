@@ -1,0 +1,14 @@
+trigger:
+- main
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Fabric/Pipeline
+
+jobs:
+- template: BuildLibrary.yml@templates
+  parameters:
+    packagesToPack: '**/Insights.csproj'
+    
