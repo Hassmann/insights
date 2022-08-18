@@ -1,12 +1,26 @@
-﻿using SLD.Application;
+﻿using SLD.Insights;
 using System;
 using System.Threading.Tasks;
 
 namespace PlainApp;
 
-class Program : ConsoleApplication
+internal class Program
 {
-	protected override async Task Execute()
+	private static InsightsSource Insights = new InsightsSource("Plain App");
+
+	private static void RaiseException()
+	{
+		try
+		{
+			throw new Exception("Inner");
+		}
+		catch (Exception e)
+		{
+			throw new Exception("Outer", e);
+		}
+	}
+
+	private static async Task Main(string[] args)
 	{
 		Insights.Info("Executing");
 
@@ -27,20 +41,4 @@ class Program : ConsoleApplication
 
 		Insights.Info("Executed");
 	}
-
-	void RaiseException()
-	{
-		try
-		{
-			throw new Exception("Inner");
-		}
-		catch (Exception e)
-		{
-			throw new Exception("Outer", e);
-		}
-	}
-
-
-	static Task Main(string[] args)
-		=> Run<Program>("PlainApp");
 }
