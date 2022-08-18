@@ -1,6 +1,9 @@
 trigger:
 - main
 
+pool:
+  vmImage: ${{ parameters.vmImage }}
+
 resources:
   repositories:
     - repository: templates
@@ -16,5 +19,11 @@ stages:
 
   - stage: Publish
     jobs:
-    - template: PublishToArtifacts.yml@templates
+    - job: PublishToArtifacts
+      steps:
+      - task: NuGetCommand@2
+        displayName: 'Push NuGet to Feed'
+        inputs:
+          command: push
+          publishVstsFeed: '6ccb127a-73ca-413a-a232-1c9d8068ca27/3fa84e8f-496b-44a0-b0fe-5e6552a1bd76'
     
