@@ -7,6 +7,12 @@
     <Authors>Andreas Hassmann</Authors>
     <Company>Schloss Lautereck Design</Company>
     <Description>Formatted Output Traces</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Output Window;Instrumentation;Trace</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Hassmann/insights</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Hassmann/insights</PackageProjectUrl>
+    <Title>VS Output Window Traces</Title>
   </PropertyGroup>
 
   <ItemGroup>
