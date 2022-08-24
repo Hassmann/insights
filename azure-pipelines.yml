@@ -1,6 +1,9 @@
 trigger:
 - main
 
+pool:
+ name: Home
+ 
 resources:
   repositories:
     - repository: templates
