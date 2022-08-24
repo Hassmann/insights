@@ -13,7 +13,15 @@
     <RepositoryUrl>https://github.com/Hassmann/insights</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Hassmann/insights</PackageProjectUrl>
     <Title>VS Output Window Traces</Title>
+    <PackageIcon>SLD-Software-Nuget.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\_Media\SLD-Software-Nuget.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
