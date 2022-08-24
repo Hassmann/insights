@@ -22,7 +22,6 @@ stages:
         displayName: 'Publish to nuget.org'
         inputs:
           command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.snupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
     
