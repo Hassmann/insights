@@ -22,7 +22,7 @@ stages:
         displayName: 'Publish to nuget.org'
         inputs:
           command: 'push'
-          packagesToPush: '$(Pipeline.Workspace)/**/drop/*.*nupkg'
+          packagesToPush: '$(Pipeline.Workspace)/**/drop/*.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
     
