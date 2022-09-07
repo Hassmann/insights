@@ -19,13 +19,5 @@ stages:
 
   - stage: Publish
     jobs:
-    - job: PublishToArtifacts
-      steps:
-      - task: NuGetCommand@2
-        displayName: 'Publish to nuget.org'
-        inputs:
-          command: 'push'
-          packagesToPush: '$(Pipeline.Workspace)/**/drop/*.nupkg'
-          nuGetFeedType: 'external'
-          publishFeedCredentials: 'Nuget.org'
-    
+    - template: PublishToNuget.yml@templates
+      
