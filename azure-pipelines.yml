@@ -1,0 +1,31 @@
+trigger:
+- main
+- development
+
+pool:
+ name: Home
+ 
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Fabric/Pipeline
+
+stages:
+  - stage: Build
+    jobs:
+    - template: BuildLibrary.yml@templates
+      parameters:
+        packagesToPack: '**/Insights.csproj'
+
+  - stage: PublishInternal
+    displayName: Publish internally
+    jobs:
+    - template: PublishToArtifacts.yml@templates
+      
+  - stage: PublishToNuget
+    displayName: Publish to nuget.org
+    condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
+    jobs:
+    - template: PublishToNuget.yml@templates
+      
