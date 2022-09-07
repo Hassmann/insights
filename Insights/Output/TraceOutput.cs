@@ -33,7 +33,7 @@ namespace SLD.Insights.Output
 					break;
 
 				default:
-					prefix = ' ';
+					prefix = insight.IsHighlight ? 'I' : ' ';
 					break;
 			};
 

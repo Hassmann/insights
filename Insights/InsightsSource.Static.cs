@@ -36,7 +36,7 @@ namespace SLD.Insights
 
 			if (settings.Sources != null && settings.Sources.Any())
 			{
-				TraceSelf($"Configured Sources: {string.Join(", ", settings.Sources.Select(source => source.Name))}");
+				TraceHighlight($"Configured Sources: {string.Join(", ", settings.Sources.Select(source => source.Name))}");
 				ApplySettings(settings);
 			}
 			else
@@ -75,7 +75,7 @@ namespace SLD.Insights
 
 		private static void OnSourceRegistered(DiagnosticListener listener)
 		{
-			TraceSelf($"Available: {listener.Name}", TraceLevel.Verbose);
+			TraceHighlight($"Available: {listener.Name}");
 
 			if (_sources.TryGetValue(listener.Name, out SourceSettings settings) && settings.Level != TraceLevel.Off)
 			{
@@ -95,7 +95,10 @@ namespace SLD.Insights
 			_output.OnNext(insight);
 		}
 
-		private static void TraceSelf(string text, TraceLevel level = TraceLevel.Info)
+		private static void TraceHighlight(string text)
+			=> TraceSelf(text, TraceLevel.Info, true);
+
+		private static void TraceSelf(string text, TraceLevel level = TraceLevel.Info, bool isHighlight = false)
 		{
 			if (_insightsLevel >= level)
 			{
@@ -104,7 +107,8 @@ namespace SLD.Insights
 					Source = "Insights",
 					Text = text,
 					Level = level,
-					Time = DateTime.Now - _startTime
+					Time = DateTime.Now - _startTime,
+					IsHighlight = isHighlight
 				});
 			}
 		}

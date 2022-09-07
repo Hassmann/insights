@@ -11,6 +11,7 @@ namespace SLD.Insights
 		public string Source { get; set; }
 		public string Text { get; set; }
 		public object Payload { get; set; }
+		public bool IsHighlight { get; set; }
 
 		public TraceLevel Level { get; set; } = DefaultLevel;
 
