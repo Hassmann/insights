@@ -75,15 +75,18 @@ namespace SLD.Insights
 
 		private static void OnSourceRegistered(DiagnosticListener listener)
 		{
-			TraceHighlight($"Available: {listener.Name}");
+			SourceSettings settings = null;
 
-			if (_sources.TryGetValue(listener.Name, out SourceSettings settings) && settings.Level != TraceLevel.Off)
+			if (_sources.TryGetValue(listener.Name, out settings) && settings.Level != TraceLevel.Off)
 			{
 				listener
 					.Select(pair => (Insight)pair.Value)
 					.Where(insight => settings.Level >= insight.Level)
 					.Subscribe(insight => OnInsightReceived(listener, insight));
 			}
+
+			var state = settings is null ? "Unconfigured" : settings.Level.ToString();
+			TraceHighlight($"{listener.Name} | {state}");
 		}
 
 		private static void OnInsightReceived(DiagnosticListener listener, Insight insight)
