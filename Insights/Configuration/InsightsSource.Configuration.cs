@@ -41,7 +41,7 @@ namespace SLD.Insights
 		#region Custom: Insights.Levels
 
 		private const string CustomFileName = "Insights.Levels";
-		private const string SettingsPattern = @"^(-?)\s*(\w[\w|\s]*)\s*:\s*(Off|Warning|Verbose|Error|Info)$";
+		private const string SettingsPattern = @"^(-?)\s*(.*)\s*:\s*(Off|Warning|Verbose|Error|Info)$";
 
 		private static InsightsSettings FindCustomSettings()
 		{
