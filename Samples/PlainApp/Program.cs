@@ -12,11 +12,11 @@ internal class Program
 	{
 		try
 		{
-			throw new Exception("Inner");
+			throw new IndexOutOfRangeException("Inner");
 		}
 		catch (Exception e)
 		{
-			throw new Exception("Outer", e);
+			throw new InvalidOperationException("Outer", e);
 		}
 	}
 
