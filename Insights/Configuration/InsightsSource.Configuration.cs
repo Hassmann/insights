@@ -76,8 +76,8 @@ namespace SLD.Insights
 		static (bool IsSpecial, string Name, TraceLevel Level) ResolveMatch(Match match)
 			=> (
 				match.Groups[1].Value.Any(),
-				match.Groups[2].Value,
-				(TraceLevel)Enum.Parse(typeof(TraceLevel), match.Groups[3].Value)
+				match.Groups[2].Value.Trim(),
+				(TraceLevel)Enum.Parse(typeof(TraceLevel), match.Groups[3].Value.Trim())
 			);
 
 		static IEnumerable<string> ValidLines(string fileName)
