@@ -9,7 +9,7 @@ namespace SLD.Insights
 
 		public InsightsSource(string area)
 		{
-			_source = new DiagnosticListener(area);
+			_source = new DiagnosticListener(area.Trim());
 		}
 
 		public InsightsSource(object source) : this(source.ToString())
