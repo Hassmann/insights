@@ -36,7 +36,7 @@ namespace SLD.Insights
 
 			if (settings.Sources != null && settings.Sources.Any())
 			{
-				TraceHighlight($"Configured Sources: {string.Join(", ", settings.Sources.Select(source => source.Name))}");
+				WriteHighlight($"Configured Sources: {string.Join(", ", settings.Sources.Select(source => source.Name))}");
 				ApplySettings(settings);
 			}
 			else
@@ -86,8 +86,14 @@ namespace SLD.Insights
 					.Subscribe(insight => OnInsightReceived(listener, insight));
 			}
 
-			var state = settings is null ? "Unconfigured" : settings.Level.ToString();
-			TraceHighlight($"{listener.Name} | {state}");
+			if (settings is null)
+			{
+				WriteHighlight($"{listener.Name}: Unconfigured");
+			}
+			else
+			{
+				WriteHighlight($"{listener.Name}: {settings.Level}", TraceLevel.Verbose);
+			}
 		}
 
 		private static void OnInsightReceived(DiagnosticListener listener, Insight insight)
@@ -99,8 +105,8 @@ namespace SLD.Insights
 			_output.OnNext(insight);
 		}
 
-		private static void TraceHighlight(string text)
-			=> TraceSelf(text, TraceLevel.Info, true);
+		private static void WriteHighlight(string text, TraceLevel level = TraceLevel.Info)
+			=> TraceSelf(text, level, true);
 
 		private static void TraceSelf(string text, TraceLevel level = TraceLevel.Info, bool isHighlight = false)
 		{
