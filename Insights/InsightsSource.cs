@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace SLD.Insights
 {
@@ -15,6 +17,8 @@ namespace SLD.Insights
 		{
 		}
 
+		#region Direct
+
 		public void Trace(string text, params object[] payload)
 			=> Log(text, TraceLevel.Verbose, null, payload);
 
@@ -28,13 +32,51 @@ namespace SLD.Insights
 			=> Log(text, TraceLevel.Error, exception: e, payload);
 
 		public void Log(string text, TraceLevel level = Insight.DefaultLevel, Exception exception = null, params object[] payload)
-			=> Log(() => new Insight(level)
-			{
-				Text = text,
-				Payload = payload,
-				Exception = exception
+			=> Log(() => Create(level, text, exception, payload), level);
 
+		#endregion Direct
+
+		#region Deferred
+
+		public void Log(Func<string> text, TraceLevel level = Insight.DefaultLevel)
+			=> Log(() => Create(level, text()), level);
+
+		public void Log(Func<(string text, object payload)> create, TraceLevel level = Insight.DefaultLevel)
+			=> Log(() =>
+			{
+				var values = create();
+				return Create(level, values.text, null, new object[] { values.payload });
 			}, level);
+
+		public void Log(Func<(string text, IEnumerable<object> payload)> create, TraceLevel level = Insight.DefaultLevel)
+			=> Log(() =>
+			{
+				var values = create();
+				return Create(level, values.text, null, values.payload.ToArray());
+			}, level);
+
+		public void Log(Func<(string text, Exception exception)> create, TraceLevel level = Insight.DefaultLevel)
+			=> Log(() =>
+			{
+				var values = create();
+				return Create(level, values.text, values.exception);
+			}, level);
+
+		public void Log(Func<(string text, Exception exception, object payload)> create, TraceLevel level = Insight.DefaultLevel)
+			=> Log(() =>
+			{
+				var values = create();
+				return Create(level, values.text, values.exception, new object[] { values.payload });
+			}, level);
+
+		public void Log(Func<(string text, Exception exception, IEnumerable<object> payload)> create, TraceLevel level = Insight.DefaultLevel)
+			=> Log(() =>
+			{
+				var values = create();
+				return Create(level, values.text, values.exception, values.payload.ToArray());
+			}, level);
+
+		#endregion Deferred
 
 		public void Log(Func<Insight> createInsight, TraceLevel level = Insight.DefaultLevel)
 		{
@@ -54,5 +96,13 @@ namespace SLD.Insights
 				}
 			}
 		}
+
+		private Insight Create(TraceLevel level, string text, Exception exception = null, object[] payload = null)
+					=> new Insight(level)
+					{
+						Text = text,
+						Payload = payload,
+						Exception = exception
+					};
 	}
 }

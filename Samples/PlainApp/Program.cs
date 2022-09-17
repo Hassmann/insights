@@ -39,6 +39,8 @@ internal class Program
 			Insights.Error("Test Exception", e);
 		}
 
+		Insights.Log(() => "Deferred");
+
 		Insights.Info("Executed");
 	}
 }
