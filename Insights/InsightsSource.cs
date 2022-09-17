@@ -15,20 +15,20 @@ namespace SLD.Insights
 		{
 		}
 
-		public void Trace(string text, object payload = null)
-			=> Send(text, TraceLevel.Verbose, payload);
+		public void Trace(string text, params object[] payload)
+			=> Log(text, TraceLevel.Verbose, null, payload);
 
-		public void Info(string text, object payload = null)
-			=> Send(text, TraceLevel.Info, payload);
+		public void Info(string text, params object[] payload)
+			=> Log(text, TraceLevel.Info, null, payload);
 
-		public void Warning(string text, object payload = null)
-			=> Send(text, TraceLevel.Warning, payload);
+		public void Warning(string text, params object[] payload)
+			=> Log(text, TraceLevel.Warning, null, payload);
 
-		public void Error(string text, Exception e = null)
-			=> Send(text, TraceLevel.Error, exception: e);
+		public void Error(string text, Exception e = null, params object[] payload)
+			=> Log(text, TraceLevel.Error, exception: e, payload);
 
-		public void Send(string text, TraceLevel level = Insight.DefaultLevel, object payload = null, Exception exception = null)
-			=> Send(() => new Insight(level)
+		public void Log(string text, TraceLevel level = Insight.DefaultLevel, Exception exception = null, params object[] payload)
+			=> Log(() => new Insight(level)
 			{
 				Text = text,
 				Payload = payload,
@@ -36,7 +36,7 @@ namespace SLD.Insights
 
 			}, level);
 
-		public void Send(Func<Insight> createInsight, TraceLevel level = Insight.DefaultLevel)
+		public void Log(Func<Insight> createInsight, TraceLevel level = Insight.DefaultLevel)
 		{
 			if (IsEnabled(null, level))
 			{
@@ -46,7 +46,7 @@ namespace SLD.Insights
 
 					insight.Source = Name;
 
-					Write(InsightName, createInsight());
+					Write(InsightName, insight);
 				}
 				catch (Exception e)
 				{
