@@ -80,7 +80,8 @@ namespace SLD.Insights
 			if (_sources.TryGetValue(listener.Name, out settings) && settings.Level != TraceLevel.Off)
 			{
 				listener
-					.Select(pair => (Insight)pair.Value)
+					.Select(pair => pair.Value)
+					.OfType<Insight>()
 					.Where(insight => settings.Level >= insight.Level)
 					.Subscribe(insight => OnInsightReceived(listener, insight));
 			}
