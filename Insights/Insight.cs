@@ -6,18 +6,27 @@ namespace SLD.Insights
 
 	public class Insight
 	{
+
 		internal const TraceLevel DefaultLevel = TraceLevel.Info;
 
-		public string Source { get; set; }
+		public Insight(TraceLevel level = DefaultLevel)
+		{
+			Level = level;
+		}
+
+		public TraceLevel Level { get; }
+		public DateTimeOffset TimeStamp { get; } = DateTimeOffset.Now;
+
+		public string Source { get; internal set; }
 		public string Text { get; set; }
 		public object Payload { get; set; }
 		public bool IsHighlight { get; set; }
 
-		public TraceLevel Level { get; set; } = DefaultLevel;
 
 		public Exception Exception { get; set; }
 
-		public TimeSpan Time { get; set; }
+		public TimeSpan Time
+			=> TimeStamp - InsightsSource.StartTime;
 
 		public bool IsError
 			=> Exception != null;

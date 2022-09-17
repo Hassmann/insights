@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
@@ -16,13 +15,13 @@ namespace SLD.Insights
 		public static readonly string BasePath
 			= AppDomain.CurrentDomain.BaseDirectory;
 
-		private static readonly DateTime _startTime = DateTime.Now;
+		internal static readonly DateTime StartTime = DateTime.Now;
 
 		// Settings for each configured source
 		private static readonly Dictionary<string, SourceSettings> _sources = new Dictionary<string, SourceSettings>();
 
 		// Global output of insights
-		private static readonly Subject<Insight> _output = new Subject<Insight>();
+		private static readonly Subject<KeyValuePair<string, object>> _sink = new Subject<KeyValuePair<string, object>>();
 
 		// Trace Insights itself?
 		private static TraceLevel _insightsLevel = TraceLevel.Info;
@@ -54,7 +53,7 @@ namespace SLD.Insights
 		}
 
 		public static IObservable<Insight> Insights
-			=> _output;
+			=> _sink.Select(pair => pair.Value as Insight);
 
 		private static void ApplySettings(InsightsSettings settings)
 		{
@@ -79,10 +78,7 @@ namespace SLD.Insights
 
 				if (_sources.TryGetValue(insights.Name, out settings) && settings.Level != TraceLevel.Off)
 				{
-					insights.Subscribe(new AnonymousObserver<KeyValuePair<string, object>>(
-						pair => OnInsightReceived(listener, pair.Value as Insight)
-						)
-						, settings.IsEnabled);
+					insights.Subscribe(_sink, settings.IsEnabled);
 				}
 
 				if (settings is null)
@@ -96,15 +92,6 @@ namespace SLD.Insights
 			}
 		}
 
-		private static void OnInsightReceived(DiagnosticListener listener, Insight insight)
-		{
-			// Never trace in here!
-			insight.Source = listener.Name;
-			insight.Time = DateTime.Now - _startTime;
-
-			_output.OnNext(insight);
-		}
-
 		private static void WriteHighlight(string text, TraceLevel level = TraceLevel.Info)
 			=> TraceSelf(text, level, true);
 
@@ -112,12 +99,10 @@ namespace SLD.Insights
 		{
 			if (_insightsLevel >= level)
 			{
-				TraceOutput.Write(new Insight
+				TraceOutput.Write(new Insight(level)
 				{
 					Source = "Insights",
 					Text = text,
-					Level = level,
-					Time = DateTime.Now - _startTime,
 					IsHighlight = isHighlight
 				});
 			}

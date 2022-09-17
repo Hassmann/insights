@@ -5,6 +5,8 @@ namespace SLD.Insights
 {
 	public partial class InsightsSource : DiagnosticListener
 	{
+		private const string InsightName = null;
+
 		public InsightsSource(string area) : base(area.Trim())
 		{
 		}
@@ -26,21 +28,31 @@ namespace SLD.Insights
 			=> Send(text, TraceLevel.Error, exception: e);
 
 		public void Send(string text, TraceLevel level = Insight.DefaultLevel, object payload = null, Exception exception = null)
-		{
-			if(IsEnabled(null, level))
-			{
-				WriteTo(this, text, level, payload, exception);
-			}
-		}
-
-		static void WriteTo(DiagnosticSource source, string text, TraceLevel level = Insight.DefaultLevel, object payload = null, Exception exception = null)
-			=> source.Write(text, new Insight
+			=> Send(() => new Insight(level)
 			{
 				Text = text,
-				Level = level,
 				Payload = payload,
 				Exception = exception
-			});
 
+			}, level);
+
+		public void Send(Func<Insight> createInsight, TraceLevel level = Insight.DefaultLevel)
+		{
+			if (IsEnabled(null, level))
+			{
+				try
+				{
+					var insight = createInsight();
+
+					insight.Source = Name;
+
+					Write(InsightName, createInsight());
+				}
+				catch (Exception e)
+				{
+					Error("Could not create Insight", e);
+				}
+			}
+		}
 	}
 }
