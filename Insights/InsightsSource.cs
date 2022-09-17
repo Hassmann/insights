@@ -3,13 +3,10 @@ using System.Diagnostics;
 
 namespace SLD.Insights
 {
-	public partial class InsightsSource
+	public partial class InsightsSource : DiagnosticListener
 	{
-		readonly DiagnosticSource _source;
-
-		public InsightsSource(string area)
+		public InsightsSource(string area) : base(area.Trim())
 		{
-			_source = new DiagnosticListener(area.Trim());
 		}
 
 		public InsightsSource(object source) : this(source.ToString())
@@ -17,19 +14,24 @@ namespace SLD.Insights
 		}
 
 		public void Trace(string text, object payload = null)
-			=> Write(text, TraceLevel.Verbose, payload);
+			=> Send(text, TraceLevel.Verbose, payload);
 
 		public void Info(string text, object payload = null)
-			=> Write(text, TraceLevel.Info, payload);
+			=> Send(text, TraceLevel.Info, payload);
 
 		public void Warning(string text, object payload = null)
-			=> Write(text, TraceLevel.Warning, payload);
+			=> Send(text, TraceLevel.Warning, payload);
 
 		public void Error(string text, Exception e = null)
-			=> Write(text, TraceLevel.Error, exception: e);
+			=> Send(text, TraceLevel.Error, exception: e);
 
-		public void Write(string text, TraceLevel level = Insight.DefaultLevel, object payload = null, Exception exception = null)
-			=> WriteTo(_source, text, level, payload, exception);
+		public void Send(string text, TraceLevel level = Insight.DefaultLevel, object payload = null, Exception exception = null)
+		{
+			if(IsEnabled(null, level))
+			{
+				WriteTo(this, text, level, payload, exception);
+			}
+		}
 
 		static void WriteTo(DiagnosticSource source, string text, TraceLevel level = Insight.DefaultLevel, object payload = null, Exception exception = null)
 			=> source.Write(text, new Insight

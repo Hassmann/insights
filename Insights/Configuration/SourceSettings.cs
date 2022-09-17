@@ -6,5 +6,8 @@ namespace SLD.Insights.Configuration
 	{
 		public string Name { get; set; }
 		public TraceLevel Level { get; set; } = Insight.DefaultLevel;
+
+		internal bool IsEnabled(string name, object level, object ignored)
+			=> Level >= (TraceLevel)level;
 	}
 }

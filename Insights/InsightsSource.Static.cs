@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
@@ -48,12 +47,11 @@ namespace SLD.Insights
 			TraceSelf($"BasePath: {BasePath}");
 
 			// Listen to insights
-			_output.Subscribe(new TraceObserver(settings));
+			Insights.Subscribe(new TraceObserver(settings));
 
 			// Listen to source registrations
-			DiagnosticListener.AllListeners.Subscribe(OnSourceRegistered);
+			AllListeners.Subscribe(OnSourceRegistered);
 		}
-
 
 		public static IObservable<Insight> Insights
 			=> _output;
@@ -75,24 +73,26 @@ namespace SLD.Insights
 
 		private static void OnSourceRegistered(DiagnosticListener listener)
 		{
-			SourceSettings settings = null;
+			if (listener is InsightsSource insights)
+			{
+				SourceSettings settings = null;
 
-			if (_sources.TryGetValue(listener.Name, out settings) && settings.Level != TraceLevel.Off)
-			{
-				listener
-					.Select(pair => pair.Value)
-					.OfType<Insight>()
-					.Where(insight => settings.Level >= insight.Level)
-					.Subscribe(insight => OnInsightReceived(listener, insight));
-			}
+				if (_sources.TryGetValue(insights.Name, out settings) && settings.Level != TraceLevel.Off)
+				{
+					insights.Subscribe(new AnonymousObserver<KeyValuePair<string, object>>(
+						pair => OnInsightReceived(listener, pair.Value as Insight)
+						)
+						, settings.IsEnabled);
+				}
 
-			if (settings is null)
-			{
-				WriteHighlight($"{listener.Name}: Unconfigured");
-			}
-			else
-			{
-				WriteHighlight($"{listener.Name}: {settings.Level}", TraceLevel.Verbose);
+				if (settings is null)
+				{
+					WriteHighlight($"{listener.Name}: Unconfigured");
+				}
+				else
+				{
+					WriteHighlight($"{listener.Name}: {settings.Level}", TraceLevel.Verbose);
+				}
 			}
 		}
 
