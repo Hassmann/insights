@@ -1,4 +1,5 @@
 ﻿using SLD.Insights;
+using SLD.Insights.Output;
 using System;
 using System.Threading.Tasks;
 
@@ -22,6 +23,9 @@ internal class Program
 
 	private static async Task Main(string[] args)
 	{
+		InsightsSource.Insights
+			.Subscribe(new ConsoleObserver());
+
 		Insights.Info("Executing");
 
 		Insights.Warning("Test Warning");
