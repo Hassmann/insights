@@ -1,22 +1,33 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SLD.Insights.Output
 {
-
 	using Configuration;
 
-	class TraceObserver : IObserver<Insight>
+	public class TraceObserver : IObserver<Insight>
 	{
-		readonly InsightsSettings _settings;
+		private readonly InsightsSettings _settings;
 
 		public TraceObserver(InsightsSettings settings)
 		{
 			_settings = settings;
 		}
 
-		public void OnCompleted() => throw new NotImplementedException();
+		public void OnCompleted() 
+			=> TraceOutput.Write(new Insight(TraceLevel.Info)
+			{
+				Source = nameof(TraceObserver),
+				Text = "Completed - no more traces"
+			});
 
-		public void OnError(Exception error) => throw new NotImplementedException();
+		public void OnError(Exception error)
+			=> TraceOutput.Write(new Insight(TraceLevel.Error)
+			{
+				Source = nameof(TraceObserver),
+				Exception = error,
+				Text = "Failure: " + error.ToTrace()
+			});
 
 		public void OnNext(Insight insight)
 		{

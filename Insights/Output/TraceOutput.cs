@@ -19,6 +19,13 @@ namespace SLD.Insights.Output
 
 		public static void Write(Insight insight)
 		{
+			string line = ToTrace(insight);
+
+			Trace.WriteLine(line);
+		}
+
+		public static string ToTrace(this Insight insight)
+		{
 			string time = insight.Time.ToString(@"mm\:ss\.fff");
 
 			char prefix;
@@ -37,7 +44,9 @@ namespace SLD.Insights.Output
 					break;
 			};
 
-			Trace.WriteLine($"{prefix} {time} {insight.Source,SourceIndentation} {divider} {insight.Text}");
+			var line = $"{prefix} {time} {insight.Source,SourceIndentation} {divider} {insight.Text}";
+
+			return line;
 		}
 
 		public static void Dump(Exception exception)

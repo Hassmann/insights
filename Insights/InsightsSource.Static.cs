@@ -34,7 +34,7 @@ namespace SLD.Insights
 
 			if (settings.Sources != null && settings.Sources.Any())
 			{
-				WriteHighlight($"Configured Sources: {string.Join(", ", settings.Sources.Select(source => source.Name))}");
+				WriteHighlight($"Configured Sources: {string.Join(", ", settings.Sources?.Select(source => source.Name))}");
 				ApplySettings(settings);
 			}
 			else
