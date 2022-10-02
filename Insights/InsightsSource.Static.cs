@@ -65,7 +65,12 @@ namespace SLD.Insights
 				}
 				else
 				{
-					_sources.Add(source.Name, source);
+					if (_sources.ContainsKey(source.Name))
+					{
+						TraceSelf($"Defined more than once: {source.Name}", TraceLevel.Warning);
+					}
+
+					_sources[source.Name] = source;
 				}
 			}
 		}
