@@ -9,5 +9,8 @@ namespace SLD.Insights.Configuration
 
 		internal bool IsEnabled(string name, object level, object ignored)
 			=> Level >= (TraceLevel)level;
+
+		public override string ToString()
+			=> $"{Name}: {Level}";
 	}
 }
