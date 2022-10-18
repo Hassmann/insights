@@ -70,6 +70,8 @@ namespace SLD.Insights
 				};
 
 				_sources[source.Name] = settings;
+
+				source.Subscribe(_sink, settings.IsEnabled);
 			}
 		}
 

@@ -19,8 +19,8 @@ namespace SLD.Insights
 
 		public TraceLevel DisplayLevel
 		{
-			get => InsightsSource.GetDisplayLevel(this);
-			set => InsightsSource.SetDisplayLevel(this, value);
+			get => GetDisplayLevel(this);
+			set => SetDisplayLevel(this, value);
 		}
 
 		#region Direct
