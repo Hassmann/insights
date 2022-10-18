@@ -55,6 +55,34 @@ namespace SLD.Insights
 		public static IObservable<Insight> Insights
 			=> _sink.Select(pair => pair.Value as Insight);
 
+		private static void SetDisplayLevel(InsightsSource source, TraceLevel level)
+		{
+			if (_sources.TryGetValue(source.Name, out var found))
+			{
+				found.Level = level;
+			}
+			else
+			{
+				var settings = new SourceSettings
+				{
+					Name = source.Name,
+					Level = level
+				};
+
+				_sources[source.Name] = settings;
+			}
+		}
+
+		private static TraceLevel GetDisplayLevel(InsightsSource source)
+		{
+			if (_sources.TryGetValue(source.Name, out var found))
+			{
+				return found.Level;
+			}
+
+			return Insight.DefaultLevel;
+		}
+
 		private static void ApplySettings(InsightsSettings settings)
 		{
 			foreach (SourceSettings source in settings.Sources)

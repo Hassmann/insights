@@ -17,6 +17,12 @@ namespace SLD.Insights
 		{
 		}
 
+		public TraceLevel DisplayLevel
+		{
+			get => InsightsSource.GetDisplayLevel(this);
+			set => InsightsSource.SetDisplayLevel(this, value);
+		}
+
 		#region Direct
 
 		public void Trace(string text, params object[] payload)
