@@ -57,6 +57,8 @@ namespace SLD.Insights
 
 		private static void SetDisplayLevel(InsightsSource source, TraceLevel level)
 		{
+			TraceSelf($"{source.Name}: {level}");
+
 			if (_sources.TryGetValue(source.Name, out var found))
 			{
 				found.Level = level;
