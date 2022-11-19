@@ -8,8 +8,17 @@
 
 		public bool DumpExceptions { get; set; } = true;
 
+		public TraceLevel DefaultLevel { get; set; } = TraceLevel.Warning;
+
 		public bool HasSources
 			=> (Levels is not null && Levels.Any())
 			|| (Sources is not null && Sources.Any());
+
+		public IEnumerable<string> ConfiguredSources
+			=> Enumerable.Concat( 
+				Sources.IfAny().Select(source => source.Name),
+				Levels.IfAny().Select(level => level.Key)
+				)
+			.Distinct();
 	}
 }

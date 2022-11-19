@@ -21,6 +21,9 @@ namespace SLD.Insights
 		// Trace Insights itself?
 		private static TraceLevel _insightsLevel = TraceLevel.Info;
 
+		// Default Level for Source, if not configured
+		private static TraceLevel _defaultSourceLevel;
+
 		static InsightsSource()
 		{
 			TraceSelf("Initialize");
@@ -29,7 +32,7 @@ namespace SLD.Insights
 
 			if (settings.HasSources)
 			{
-				WriteHighlight($"Configured Sources: {string.Join(", ", settings.Sources?.Select(source => source.Name))}");
+				WriteHighlight($"Configured Sources: {string.Join(", ", settings.ConfiguredSources)}");
 				ApplySettings(settings);
 			}
 			else
@@ -53,6 +56,7 @@ namespace SLD.Insights
 		public static void ApplySettings(InsightsSettings settings)
 		{
 			_sources.Clear();
+			_defaultSourceLevel = settings.DefaultLevel;
 
 			// Start with deprecated format
 			foreach (SourceSettings source in settings.Sources.IfAny())
@@ -85,7 +89,7 @@ namespace SLD.Insights
 
 				_sources[source.Name] = settings;
 
-				source.Subscribe(_sink, settings.IsEnabled);
+				source.Subscribe(_sink, (string name, object level, object ignored) => IsSourceEnabled(source, (TraceLevel)level));
 			}
 		}
 
@@ -97,6 +101,16 @@ namespace SLD.Insights
 			}
 
 			return Insight.DefaultLevel;
+		}
+
+		private static bool IsSourceEnabled(InsightsSource source, TraceLevel level)
+		{
+			if (_sources.TryGetValue(source.Name, out var found))
+			{
+				return found.Level >= level;
+			}
+
+			return _defaultSourceLevel >= level;
 		}
 
 		private static void ApplySourceLevel(string source, TraceLevel level)
@@ -128,7 +142,7 @@ namespace SLD.Insights
 
 				if (_sources.TryGetValue(insights.Name, out settings) && settings.Level != TraceLevel.Off)
 				{
-					insights.Subscribe(_sink, settings.IsEnabled);
+					insights.Subscribe(_sink, (string name, object level, object ignored) => IsSourceEnabled(insights, (TraceLevel)level));
 				}
 
 				if (settings is null)

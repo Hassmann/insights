@@ -7,8 +7,5 @@
 
 		public override string ToString()
 			=> $"{Name}: {Level}";
-
-		internal bool IsEnabled(string name, object level, object ignored)
-					=> Level >= (TraceLevel)level;
 	}
 }
