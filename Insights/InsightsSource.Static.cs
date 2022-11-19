@@ -87,23 +87,41 @@ namespace SLD.Insights
 			return Insight.DefaultLevel;
 		}
 
-		private static void ApplySettings(InsightsSettings settings)
+		public static void ApplySettings(InsightsSettings settings)
 		{
+			_sources.Clear();
+
+			// Start with deprecated format
 			foreach (SourceSettings source in settings.Sources)
 			{
-				if (source.Name == "Insights")
-				{
-					_insightsLevel = source.Level;
-				}
-				else
-				{
-					if (_sources.ContainsKey(source.Name))
-					{
-						TraceSelf($"Defined more than once: {source.Name}", TraceLevel.Warning);
-					}
+				ApplySourceLevel(source.Name, source.Level);
+			}
 
-					_sources[source.Name] = source;
+			// Overwrite with Dictionary style
+			foreach (var pair in settings.Levels)
+			{
+				ApplySourceLevel(pair.Key, pair.Value);
+			}
+		}
+
+		private static void ApplySourceLevel(string source, TraceLevel level)
+		{
+			if (source == "Insights")
+			{
+				_insightsLevel = level;
+			}
+			else
+			{
+				if (_sources.ContainsKey(source))
+				{
+					TraceSelf($"Defined more than once: {source}", TraceLevel.Warning);
 				}
+
+				_sources[source] = new SourceSettings
+				{
+					Level = level,
+					Name = source
+				};
 			}
 		}
 
@@ -120,7 +138,7 @@ namespace SLD.Insights
 
 				if (settings is null)
 				{
-					WriteHighlight($"{listener.Name}: Unconfigured");
+					WriteHighlight($"{listener.Name}: Unconfigured", TraceLevel.Info);
 				}
 				else
 				{
