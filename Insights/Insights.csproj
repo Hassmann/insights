@@ -15,7 +15,7 @@
 		<Title>VS Output Window Traces</Title>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageIcon>SLD-Software-Nuget.png</PackageIcon>
-		<LangVersion>9</LangVersion>
+		<LangVersion>10</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

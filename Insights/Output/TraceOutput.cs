@@ -1,21 +1,18 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 
-
 namespace SLD.Insights.Output
 {
-
 	public static class TraceOutput
 	{
 		//const string Elements = "│├┝╞┼╪┿ ═━─";
-		const int SourceIndentation = 30;
-		const int DefaultIndent = 3;
-		const int DisplayWidth = 100;
+		private const int SourceIndentation = 30;
 
-		const char divider = '|';
+		private const int DefaultIndent = 3;
+		private const int DisplayWidth = 100;
+
+		private const char divider = '|';
 
 		public static void Write(Insight insight)
 		{
@@ -113,7 +110,7 @@ namespace SLD.Insights.Output
 			}
 		}
 
-		static string Indent(int indent, [Localizable(false)] string text, params object[] parameters)
+		private static string Indent(int indent, [Localizable(false)] string text, params object[] parameters)
 		{
 			return
 				new string(' ', indent) +

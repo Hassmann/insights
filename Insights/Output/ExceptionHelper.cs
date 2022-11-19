@@ -1,10 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
-
+﻿
 namespace SLD.Insights.Output
 {
-
 	/// <summary>
 	/// Extracts info for tracing
 	/// </summary>
@@ -80,7 +76,7 @@ namespace SLD.Insights.Output
 			get; private set;
 		}
 
-		static string ParseFileName(Exception ex)
+		private static string ParseFileName(Exception ex)
 		{
 			int originalLineIndex = ex.StackTrace.IndexOf(":line", StringComparison.Ordinal);
 
@@ -94,7 +90,7 @@ namespace SLD.Insights.Output
 			return sections.Last();
 		}
 
-		static int ParseLineNumber(Exception ex)
+		private static int ParseLineNumber(Exception ex)
 		{
 			string[] sections = ex.StackTrace.Split(' ');
 
@@ -115,7 +111,6 @@ namespace SLD.Insights.Output
 			}
 
 			string lineNumber = sections[index + 1];
-
 
 			if (!int.TryParse(lineNumber, out int number))
 			{

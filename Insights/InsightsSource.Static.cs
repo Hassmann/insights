@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
+﻿using System.Reactive.Subjects;
 
 namespace SLD.Insights
 {
@@ -55,6 +50,23 @@ namespace SLD.Insights
 		public static IObservable<Insight> Insights
 			=> _sink.Select(pair => pair.Value as Insight);
 
+		public static void ApplySettings(InsightsSettings settings)
+		{
+			_sources.Clear();
+
+			// Start with deprecated format
+			foreach (SourceSettings source in settings.Sources)
+			{
+				ApplySourceLevel(source.Name, source.Level);
+			}
+
+			// Overwrite with Dictionary style
+			foreach (var pair in settings.Levels)
+			{
+				ApplySourceLevel(pair.Key, pair.Value);
+			}
+		}
+
 		private static void SetDisplayLevel(InsightsSource source, TraceLevel level)
 		{
 			TraceSelf($"{source.Name}: {level}");
@@ -85,23 +97,6 @@ namespace SLD.Insights
 			}
 
 			return Insight.DefaultLevel;
-		}
-
-		public static void ApplySettings(InsightsSettings settings)
-		{
-			_sources.Clear();
-
-			// Start with deprecated format
-			foreach (SourceSettings source in settings.Sources)
-			{
-				ApplySourceLevel(source.Name, source.Level);
-			}
-
-			// Overwrite with Dictionary style
-			foreach (var pair in settings.Levels)
-			{
-				ApplySourceLevel(pair.Key, pair.Value);
-			}
 		}
 
 		private static void ApplySourceLevel(string source, TraceLevel level)

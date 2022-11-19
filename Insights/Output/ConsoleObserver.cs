@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace SLD.Insights.Output
+﻿namespace SLD.Insights.Output
 {
 	public class ConsoleObserver : IObserver<Insight>
 	{
@@ -36,9 +33,11 @@ namespace SLD.Insights.Output
 				case TraceLevel.Error:
 					Console.ForegroundColor = ConsoleColor.Red;
 					break;
+
 				case TraceLevel.Warning:
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
 					break;
+
 				default:
 					break;
 			}

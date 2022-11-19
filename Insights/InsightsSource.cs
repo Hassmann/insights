@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-
-namespace SLD.Insights
+﻿namespace SLD.Insights
 {
 	public partial class InsightsSource : DiagnosticListener
 	{

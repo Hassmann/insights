@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-
-namespace SLD.Insights.Configuration
+﻿namespace SLD.Insights.Configuration
 {
 	public class InsightsSettings
 	{
