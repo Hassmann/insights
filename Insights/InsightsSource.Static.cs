@@ -32,7 +32,7 @@ namespace SLD.Insights
 
 			InsightsSettings settings = FindAnySettings();
 
-			if (settings.Sources != null && settings.Sources.Any())
+			if (settings.HasSources)
 			{
 				WriteHighlight($"Configured Sources: {string.Join(", ", settings.Sources?.Select(source => source.Name))}");
 				ApplySettings(settings);

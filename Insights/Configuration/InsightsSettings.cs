@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace SLD.Insights.Configuration
 {
@@ -10,5 +11,9 @@ namespace SLD.Insights.Configuration
 		public Dictionary<string, TraceLevel> Levels { get; set; }
 
 		public bool DumpExceptions { get; set; } = true;
+
+		public bool HasSources
+			=> (Levels is not null && Levels.Any())
+			|| (Sources is not null && Sources.Any());
 	}
 }
