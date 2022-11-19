@@ -2,7 +2,7 @@
 {
 	public class ConsoleObserver : IObserver<Insight>
 	{
-		private bool _dumpExceptions;
+		private readonly bool _dumpExceptions;
 
 		public ConsoleObserver(bool dumpExceptions = true)
 		{
