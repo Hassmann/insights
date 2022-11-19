@@ -55,13 +55,13 @@ namespace SLD.Insights
 			_sources.Clear();
 
 			// Start with deprecated format
-			foreach (SourceSettings source in settings.Sources)
+			foreach (SourceSettings source in settings.Sources.IfAny())
 			{
 				ApplySourceLevel(source.Name, source.Level);
 			}
 
 			// Overwrite with Dictionary style
-			foreach (var pair in settings.Levels)
+			foreach (var pair in settings.Levels.IfAny())
 			{
 				ApplySourceLevel(pair.Key, pair.Value);
 			}
