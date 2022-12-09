@@ -6,12 +6,8 @@ using System.Diagnostics;
 InsightsSource.Insights
 	.Subscribe(new ConsoleObserver());
 
-// Start by placing an instance of InsightsSource where you can access it
-InsightsSource Insights = new InsightsSource("Plain App")
-{
-	// in code here, but also configurable in appsettings etc.
-	DisplayLevel = TraceLevel.Verbose
-};
+// Start by placing an instance of an InsightsSource where you can access it
+InsightsSource Insights = new("Plain App");
 
 // Send traces at different trace levels
 Insights.Trace("Executing");
@@ -29,8 +25,8 @@ catch (Exception e)
 	Insights.Error("Test Exception", e);
 }
 
-// High-performance version 
-Insights.Log(() => "Deferred", TraceLevel.Info);
+// High-performance version, Insight will only be constructed when listeners are present
+Insights.Log(() => "Expensive string creation", TraceLevel.Info);
 
 
 // Helper: Will throw a nested exception

@@ -18,10 +18,10 @@ Consider this code
 using SLD.Insights;
 using System.Diagnostics;
 
-// Start by placing an instance of InsightsSource where you can access it
-InsightsSource Insights = new InsightsSource("Plain App")
+// Start by placing an instance of an InsightsSource where you can access it
+InsightsSource Insights = new("Plain App")
 {
-	// in code here, but also configurable in appsettings etc.
+	// in code here, but usually configured in appsettings etc.
 	DisplayLevel = TraceLevel.Verbose
 };
 
@@ -41,11 +41,13 @@ catch (Exception e)
 	Insights.Error("Test Exception", e);
 }
 
-// High-performance version 
-Insights.Log(() => "Deferred", TraceLevel.Info);
+// High-performance version, Insight will only be constructed when listeners are present
+Insights.Log(() => "Expensive string creation", TraceLevel.Info);
 
 
-// Helper: Will throw a nested exception
+
+
+// Helper: Throw the nested exception above
 static void ThrowException()
 {
 	try
@@ -92,7 +94,88 @@ E 00:00.398                      Plain App | Test Exception
 
 ____________________________________________________________________________________________________
 
-  00:00.422                      Plain App | Deferred
+  00:00.422                      Plain App | Expensive string creation
 ```
 
 ## Configuration
+
+>The Output above is still too verbose, let's assume we don't want to see any of the "Insights" infrastructure stuff and only real errors from the App.
+
+Most of the time, you would not configure the displayed level in code like above, but:
+```csharp
+InsightsSource Insights = new("Plain App");
+```
+You can configure displayed levels in your ```appsettings.json```
+```json
+{
+  "Insights": {
+    "Levels": {
+      "Insights" : "Off",
+      "Plain App": "Error"
+    }
+  }
+}
+```
+The Output after a run will look like 
+```
+  00:00.004                       Insights | Initialize
+E 00:00.262                      Plain App | Test Error
+E 00:00.304                      Plain App | Test Exception
+...
+```
+If you don't use appsettings, a text file by the name of ```Insights.Levels``` in the directory of the executable can also be used to configure with a simple syntax:
+```
+Insights  : Off
+Plain App : Error
+```
+This can be useful in large projects with dozens of insight sources to stay organized, since only lines with the pattern ```[Name]:[TraceLevel]``` are being evaluated.
+```
+This is a perfectly valid configuration file.
+
+Main ________________________________________
+Plain App : Error
+
+Infrastructure ______________________________
+Insights  : Off
+```
+## Many InsightsSources
+
+>Insights are most useful when you 
+>- Can just start to type ```Insights.``` anywhere in your code and leave the trace you have in mind.
+>- The Output Window is tuned to your current work with the right granularity
+
+There are several patterns of creating insights sources, examples:
+
+### ... per class
+```csharp
+class Application
+{
+	static InsightsSource Insights = new(nameof(Application));
+}
+```
+
+### ... per instance
+```csharp
+abstract class Module
+{
+	protected InsightsSource Insights;
+
+	protected Module(string name)
+	{
+		Insights = new($"Module {name}");
+	}
+}
+```
+
+### ... as global
+```csharp
+static class Insights
+{
+	internal static InsightsSource Infrastructure = new(nameof(Infrastructure));
+	internal static InsightsSource Storage = new(nameof(Storage));
+}
+```
+### ... ad libitum
+Just make sure you have a useful collection of topics to fade in and out, according to the problem you are working on.
+
+
