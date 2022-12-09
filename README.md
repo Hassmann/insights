@@ -1,18 +1,19 @@
-### Why Insights?
+## Why Insights?
 
 __To understand what's happening in your software while you develop it__
 
->This single goal, the commitment to simplicity and not to interfere with code and performance drive the design decisions behind SLD.Insights.
+>This single goal, the commitment to simplicity, and not to interfere with code and performance drive the design of SLD.Insights.
 
-### SLD.Insights - Features
+### Features
 
-- Readable Traces to the Output Window
+- Read-friendly Traces to the Output Window
 - Configurable in Code and Settings
-- Minimal impact on code and performance
+- Minimal impact on Code and Performance
 
 ### Quickstart
+1. Get the **Nuget** package ```SLD.Insights```
 
-Consider this code
+2. Consider this code
 
 ```csharp
 using SLD.Insights;
@@ -41,10 +42,9 @@ catch (Exception e)
     Insights.Error("Test Exception", e);
 }
 
+
 // High-performance version, Insight will only be constructed when listeners are present
 Insights.Log(() => "Expensive string creation", TraceLevel.Info);
-
-
 
 
 // Helper: Throw the nested exception above
@@ -141,7 +141,7 @@ Insights  : Off
 ### Many InsightsSources
 
 >Insights are most useful when you 
->- Can just start to type ```Insights.``` anywhere in your code and leave the trace you have in mind.
+>- Can just start to type ```Insights.``` anywhere in your code and leave the trace you have in mind
 >- The Output Window is tuned to your current work with the right granularity
 
 There are several patterns of creating insights sources, examples:
