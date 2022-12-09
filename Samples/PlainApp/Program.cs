@@ -1,50 +1,47 @@
 ﻿using SLD.Insights;
 using SLD.Insights.Output;
-using System;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
-namespace PlainApp;
+// BTW: There is a global outlet for insights, based on the Reactive pattern
+InsightsSource.Insights
+	.Subscribe(new ConsoleObserver());
 
-internal class Program
+// Start by placing an instance of InsightsSource where you can access it
+InsightsSource Insights = new InsightsSource("Plain App")
 {
-	private static InsightsSource Insights = new InsightsSource("Plain App");
+	// in code here, but also configurable in appsettings etc.
+	DisplayLevel = TraceLevel.Verbose
+};
 
-	private static void RaiseException()
+// Send traces at different trace levels
+Insights.Trace("Executing");
+
+Insights.Warning("Test Warning");
+
+Insights.Error("Test Error");
+
+try
+{
+	ThrowException();
+}
+catch (Exception e)
+{
+	Insights.Error("Test Exception", e);
+}
+
+// High-performance version 
+Insights.Log(() => "Deferred", TraceLevel.Info);
+
+
+// Helper: Will throw a nested exception
+static void ThrowException()
+{
+	try
 	{
-		try
-		{
-			throw new IndexOutOfRangeException("Inner");
-		}
-		catch (Exception e)
-		{
-			throw new InvalidOperationException("Outer", e);
-		}
+		throw new IndexOutOfRangeException("Inner");
 	}
-
-	private static async Task Main(string[] args)
+	catch (Exception e)
 	{
-		InsightsSource.Insights
-			.Subscribe(new ConsoleObserver());
-
-		Insights.Info("Executing");
-
-		Insights.Warning("Test Warning");
-
-		await Task.Delay(TimeSpan.FromSeconds(1));
-
-		Insights.Error("Test Error");
-
-		try
-		{
-			RaiseException();
-		}
-		catch (Exception e)
-		{
-			Insights.Error("Test Exception", e);
-		}
-
-		Insights.Log(() => "Deferred");
-
-		Insights.Info("Executed");
+		throw new InvalidOperationException("Outer", e);
 	}
 }
