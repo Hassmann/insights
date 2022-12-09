@@ -1,16 +1,16 @@
-# Why Insights?
+### Why Insights?
 
 __To understand what's happening in your software while you develop it__
 
->This single goal and the commitment not to interfere with code and performance drive the design decisions behind SLD.Insights.
+>This single goal, the commitment to simplicity and not to interfere with code and performance drive the design decisions behind SLD.Insights.
 
-## SLD.Insights
+### SLD.Insights - Features
 
 - Readable Traces to the Output Window
 - Configurable in Code and Settings
-- Minimal impact on code performance
+- Minimal impact on code and performance
 
-## Quickstart
+### Quickstart
 
 Consider this code
 
@@ -96,8 +96,8 @@ ________________________________________________________________________________
 
   00:00.422                      Plain App | Expensive string creation
 ```
-
-## Configuration
+>Actually, it will look like this, when you have right-clicked the Output and unchecked all the clutter except "Program Output" and optionally "Exceptions".
+### Configuration
 
 >The Output above is still too verbose, let's assume we don't want to see any of the "Insights" infrastructure stuff and only real errors from the App.
 
@@ -138,7 +138,7 @@ Plain App : Error
 Infrastructure ______________________________
 Insights  : Off
 ```
-## Many InsightsSources
+### Many InsightsSources
 
 >Insights are most useful when you 
 >- Can just start to type ```Insights.``` anywhere in your code and leave the trace you have in mind.
@@ -146,7 +146,7 @@ Insights  : Off
 
 There are several patterns of creating insights sources, examples:
 
-### ... per class
+#### ... per class
 ```csharp
 class Application
 {
@@ -154,7 +154,7 @@ class Application
 }
 ```
 
-### ... per instance
+#### ... per instance
 ```csharp
 abstract class Module
 {
@@ -167,7 +167,7 @@ abstract class Module
 }
 ```
 
-### ... as global
+#### ... as global
 ```csharp
 static class Insights
 {
@@ -175,7 +175,7 @@ static class Insights
 	internal static InsightsSource Storage = new(nameof(Storage));
 }
 ```
-### ... ad libitum
+#### ... ad libitum
 Just make sure you have a useful collection of topics to fade in and out, according to the problem you are working on.
 
 
