@@ -1,18 +1,19 @@
-### Why Insights?
+## Why Insights?
 
 __To understand what's happening in your software while you develop it__
 
->This single goal, the commitment to simplicity and not to interfere with code and performance drive the design decisions behind SLD.Insights.
+>This single goal, the commitment to simplicity, and not to interfere with code and performance drive the design of SLD.Insights.
 
-### SLD.Insights - Features
+### Features
 
-- Readable Traces to the Output Window
+- Read-friendly Traces to the Output Window
 - Configurable in Code and Settings
-- Minimal impact on code and performance
+- Minimal impact on Code and Performance
 
 ### Quickstart
+1. Get the **Nuget** package ```SLD.Insights```
 
-Consider this code
+2. Consider this code
 
 ```csharp
 using SLD.Insights;
@@ -21,8 +22,8 @@ using System.Diagnostics;
 // Start by placing an instance of an InsightsSource where you can access it
 InsightsSource Insights = new("Plain App")
 {
-	// in code here, but usually configured in appsettings etc.
-	DisplayLevel = TraceLevel.Verbose
+    // in code here, but usually configured in appsettings etc.
+    DisplayLevel = TraceLevel.Verbose
 };
 
 // Send traces at different trace levels
@@ -34,30 +35,29 @@ Insights.Error("Test Error");
 
 try
 {
-	ThrowException();
+    ThrowException();
 }
 catch (Exception e)
 {
-	Insights.Error("Test Exception", e);
+    Insights.Error("Test Exception", e);
 }
+
 
 // High-performance version, Insight will only be constructed when listeners are present
 Insights.Log(() => "Expensive string creation", TraceLevel.Info);
 
 
-
-
 // Helper: Throw the nested exception above
 static void ThrowException()
 {
-	try
-	{
-		throw new IndexOutOfRangeException("Inner");
-	}
-	catch (Exception e)
-	{
-		throw new InvalidOperationException("Outer", e);
-	}
+    try
+    {
+        throw new IndexOutOfRangeException("Inner");
+    }
+    catch (Exception e)
+    {
+        throw new InvalidOperationException("Outer", e);
+    }
 }
 
 ```
@@ -141,7 +141,7 @@ Insights  : Off
 ### Many InsightsSources
 
 >Insights are most useful when you 
->- Can just start to type ```Insights.``` anywhere in your code and leave the trace you have in mind.
+>- Can just start to type ```Insights.``` anywhere in your code and leave the trace you have in mind
 >- The Output Window is tuned to your current work with the right granularity
 
 There are several patterns of creating insights sources, examples:
@@ -150,7 +150,7 @@ There are several patterns of creating insights sources, examples:
 ```csharp
 class Application
 {
-	static InsightsSource Insights = new(nameof(Application));
+    static InsightsSource Insights = new(nameof(Application));
 }
 ```
 
@@ -158,12 +158,12 @@ class Application
 ```csharp
 abstract class Module
 {
-	protected InsightsSource Insights;
-
-	protected Module(string name)
-	{
-		Insights = new($"Module {name}");
-	}
+    protected InsightsSource Insights;
+    
+    protected Module(string name)
+    {
+    	Insights = new($"Module {name}");
+    }
 }
 ```
 
@@ -171,8 +171,8 @@ abstract class Module
 ```csharp
 static class Insights
 {
-	internal static InsightsSource Infrastructure = new(nameof(Infrastructure));
-	internal static InsightsSource Storage = new(nameof(Storage));
+    internal static InsightsSource Infrastructure = new(nameof(Infrastructure));
+    internal static InsightsSource Storage = new(nameof(Storage));
 }
 ```
 #### ... ad libitum
