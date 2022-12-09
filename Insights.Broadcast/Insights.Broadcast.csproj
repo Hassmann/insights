@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<RootNamespace>SLD.Insights</RootNamespace>
+		<AssemblyName>SLD.Insights</AssemblyName>
+		<Authors>Andreas Hassmann</Authors>
+		<Company>Schloss Lautereck Design</Company>
+		<Description>Formatted Output Traces</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>Output Window;Instrumentation;Trace</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/Hassmann/insights</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/Hassmann/insights</PackageProjectUrl>
+		<Title>VS Output Window Traces</Title>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageIcon>SLD-Software-Nuget.png</PackageIcon>
+		<LangVersion>10</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Reactive" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="SLD-Software-Nuget.png">
+			<PackagePath>\</PackagePath>
+			<Pack>True</Pack>
+		</None>
+	</ItemGroup>
+
+</Project>
