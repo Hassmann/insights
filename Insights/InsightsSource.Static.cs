@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
+﻿using System.Reactive.Subjects;
 
 namespace SLD.Insights
 {
@@ -26,16 +21,19 @@ namespace SLD.Insights
 		// Trace Insights itself?
 		private static TraceLevel _insightsLevel = TraceLevel.Info;
 
+		// Default Level for Source, if not configured
+		private static TraceLevel _defaultSourceLevel;
+
 		static InsightsSource()
 		{
 			TraceSelf("Initialize");
 
 			InsightsSettings settings = FindAnySettings();
 
-			if (settings.Sources != null && settings.Sources.Any())
+			if (settings.HasSources)
 			{
-				WriteHighlight($"Configured Sources: {string.Join(", ", settings.Sources?.Select(source => source.Name))}");
 				ApplySettings(settings);
+				TraceSelf($"Configured Sources: {string.Join(", ", settings.ConfiguredSources)}", isHighlight: true);
 			}
 			else
 			{
@@ -55,18 +53,84 @@ namespace SLD.Insights
 		public static IObservable<Insight> Insights
 			=> _sink.Select(pair => pair.Value as Insight);
 
-		private static void ApplySettings(InsightsSettings settings)
+		public static void ApplySettings(InsightsSettings settings)
 		{
-			foreach (SourceSettings source in settings.Sources)
+			_sources.Clear();
+			_defaultSourceLevel = settings.DefaultLevel;
+
+			// Start with deprecated format
+			foreach (SourceSettings source in settings.Sources.IfAny())
 			{
-				if (source.Name == "Insights")
+				ApplySourceLevel(source.Name, source.Level);
+			}
+
+			// Overwrite with Dictionary style
+			foreach (var pair in settings.Levels.IfAny())
+			{
+				ApplySourceLevel(pair.Key, pair.Value);
+			}
+		}
+
+		private static void SetDisplayLevel(InsightsSource source, TraceLevel level)
+		{
+			TraceSelf($"{source.Name}: {level}");
+
+			if (_sources.TryGetValue(source.Name, out var found))
+			{
+				found.Level = level;
+			}
+			else
+			{
+				var settings = new SourceSettings
 				{
-					_insightsLevel = source.Level;
-				}
-				else
+					Name = source.Name,
+					Level = level
+				};
+
+				_sources[source.Name] = settings;
+
+				source.Subscribe(_sink, (string name, object level, object ignored) => IsSourceEnabled(source, (TraceLevel)level));
+			}
+		}
+
+		private static TraceLevel GetDisplayLevel(InsightsSource source)
+		{
+			if (_sources.TryGetValue(source.Name, out var found))
+			{
+				return found.Level;
+			}
+
+			return Insight.DefaultLevel;
+		}
+
+		private static bool IsSourceEnabled(InsightsSource source, TraceLevel level)
+		{
+			if (_sources.TryGetValue(source.Name, out var found))
+			{
+				return found.Level >= level;
+			}
+
+			return _defaultSourceLevel >= level;
+		}
+
+		private static void ApplySourceLevel(string source, TraceLevel level)
+		{
+			if (source == "Insights")
+			{
+				_insightsLevel = level;
+			}
+			else
+			{
+				if (_sources.ContainsKey(source))
 				{
-					_sources.Add(source.Name, source);
+					TraceSelf($"Defined more than once: {source}", TraceLevel.Warning);
 				}
+
+				_sources[source] = new SourceSettings
+				{
+					Level = level,
+					Name = source
+				};
 			}
 		}
 
@@ -78,12 +142,12 @@ namespace SLD.Insights
 
 				if (_sources.TryGetValue(insights.Name, out settings) && settings.Level != TraceLevel.Off)
 				{
-					insights.Subscribe(_sink, settings.IsEnabled);
+					insights.Subscribe(_sink, (string name, object level, object ignored) => IsSourceEnabled(insights, (TraceLevel)level));
 				}
 
 				if (settings is null)
 				{
-					WriteHighlight($"{listener.Name}: Unconfigured");
+					WriteHighlight($"{listener.Name}: Unconfigured", TraceLevel.Info);
 				}
 				else
 				{

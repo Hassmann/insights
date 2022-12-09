@@ -1,16 +1,12 @@
-﻿using System;
-using System.Reactive.Linq;
-
-namespace SLD.Insights
+﻿namespace SLD.Insights
 {
-
 	public static class InsightsExtensions
 	{
-		class TraceObservable<T> : IObservable<T>
+		private class TraceObservable<T> : IObservable<T>
 		{
-			readonly IObservable<T> _source;
-			readonly string _name;
-			readonly InsightsSource _insights;
+			private readonly IObservable<T> _source;
+			private readonly string _name;
+			private readonly InsightsSource _insights;
 
 			public TraceObservable(IObservable<T> source, InsightsSource insights, string name)
 			{
@@ -40,5 +36,8 @@ namespace SLD.Insights
 
 		public static IObservable<T> Trace<T>(this IObservable<T> source, InsightsSource insights, string name)
 			=> new TraceObservable<T>(source, insights, name);
+
+		public static IEnumerable<T> IfAny<T>(this IEnumerable<T> source)
+			=> source is not null && source.Any() ? source : Enumerable.Empty<T>();
 	}
 }

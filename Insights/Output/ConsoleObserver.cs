@@ -1,11 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace SLD.Insights.Output
+﻿namespace SLD.Insights.Output
 {
 	public class ConsoleObserver : IObserver<Insight>
 	{
-		private bool _dumpExceptions;
+		private readonly bool _dumpExceptions;
 
 		public ConsoleObserver(bool dumpExceptions = true)
 		{
@@ -36,9 +33,11 @@ namespace SLD.Insights.Output
 				case TraceLevel.Error:
 					Console.ForegroundColor = ConsoleColor.Red;
 					break;
+
 				case TraceLevel.Warning:
 					Console.ForegroundColor = ConsoleColor.DarkYellow;
 					break;
+
 				default:
 					break;
 			}

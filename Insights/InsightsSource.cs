@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-
-namespace SLD.Insights
+﻿namespace SLD.Insights
 {
 	public partial class InsightsSource : DiagnosticListener
 	{
@@ -15,6 +10,12 @@ namespace SLD.Insights
 
 		public InsightsSource(object source) : this(source.ToString())
 		{
+		}
+
+		public TraceLevel DisplayLevel
+		{
+			get => GetDisplayLevel(this);
+			set => SetDisplayLevel(this, value);
 		}
 
 		#region Direct

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace SLD.Insights.Output
+﻿namespace SLD.Insights.Output
 {
 	using Configuration;
 
@@ -14,7 +11,7 @@ namespace SLD.Insights.Output
 			_settings = settings;
 		}
 
-		public void OnCompleted() 
+		public void OnCompleted()
 			=> TraceOutput.Write(new Insight(TraceLevel.Info)
 			{
 				Source = nameof(TraceObserver),

@@ -1,14 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SLD.Insights
 {
 	using Configuration;
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text.RegularExpressions;
 
 	public partial class InsightsSource
 	{
@@ -73,14 +69,14 @@ namespace SLD.Insights
 			return null;
 		}
 
-		static (bool IsSpecial, string Name, TraceLevel Level) ResolveMatch(Match match)
+		private static (bool IsSpecial, string Name, TraceLevel Level) ResolveMatch(Match match)
 			=> (
 				match.Groups[1].Value.Any(),
 				match.Groups[2].Value.Trim(),
 				(TraceLevel)Enum.Parse(typeof(TraceLevel), match.Groups[3].Value.Trim())
 			);
 
-		static IEnumerable<string> ValidLines(string fileName)
+		private static IEnumerable<string> ValidLines(string fileName)
 			=> File
 				.ReadAllLines(fileName)
 				.Select(line => line.Trim())
