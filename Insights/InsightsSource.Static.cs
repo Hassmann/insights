@@ -32,8 +32,8 @@ namespace SLD.Insights
 
 			if (settings.HasSources)
 			{
-				WriteHighlight($"Configured Sources: {string.Join(", ", settings.ConfiguredSources)}");
 				ApplySettings(settings);
+				TraceSelf($"Configured Sources: {string.Join(", ", settings.ConfiguredSources)}", isHighlight: true);
 			}
 			else
 			{
