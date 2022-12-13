@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>SLD.Insights</RootNamespace>
-		<AssemblyName>SLD.Insights</AssemblyName>
+		<AssemblyName>SLD.Insights.Broadcast</AssemblyName>
 		<Authors>Andreas Hassmann</Authors>
 		<Company>Schloss Lautereck Design</Company>
-		<Description>Formatted Output Traces</Description>
+		<Description>Inter-Process Traces</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>Output Window;Instrumentation;Trace</PackageTags>
 		<RepositoryType>git</RepositoryType>
@@ -19,7 +19,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="NetMQ" Version="4.0.1.10" />
 		<PackageReference Include="System.Reactive" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Insights\Insights.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
