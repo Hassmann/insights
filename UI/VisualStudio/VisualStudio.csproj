@@ -79,9 +79,7 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Display\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Insights.Broadcast\Insights.Broadcast.csproj">
       <Project>{fc81e56a-24f8-446f-a670-969d2ff2aaf6}</Project>
