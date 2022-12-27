@@ -4,14 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Workbench"
-        xmlns:visualstudio="clr-namespace:VisualStudio;assembly=VisualStudio"
+        xmlns:display="clr-namespace:SLD.Insights.UI;assembly=SLD.Insights.UI.Display"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Border BorderBrush="Black"
                 BorderThickness="1"
                 Margin="16">
-            <visualstudio:InsightsWindowControl x:Name="_display" />
+            <display:InsightsWindowControl x:Name="_display" />
         </Border>
     </Grid>
 </Window>

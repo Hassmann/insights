@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VisualStudio.Model
+namespace SLD.Insights.UI.Model
 {
 	class Log : IObserver<Insight>
 	{

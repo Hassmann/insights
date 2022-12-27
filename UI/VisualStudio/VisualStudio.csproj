@@ -48,10 +48,6 @@
   <ItemGroup>
     <Compile Include="InsightsWindow.cs" />
     <Compile Include="InsightsWindowCommand.cs" />
-    <Compile Include="InsightsWindowControl.xaml.cs">
-      <DependentUpon>InsightsWindowControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualStudioPackage.cs" />
   </ItemGroup>
@@ -78,12 +74,6 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.4.2118" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="InsightsWindowControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\InsightsWindowCommand.png" />
     <VSCTCompile Include="VisualStudioPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
@@ -100,6 +90,10 @@
     <ProjectReference Include="..\..\Insights\Insights.csproj">
       <Project>{F4997B04-6B65-4971-9ED3-B9C8EA7C9ACC}</Project>
       <Name>Insights</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Display\Display.csproj">
+      <Project>{9aa801d8-00dd-4eef-a443-bedaed9d079f}</Project>
+      <Name>Display</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

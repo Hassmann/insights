@@ -100,9 +100,9 @@
       <Project>{F4997B04-6B65-4971-9ED3-B9C8EA7C9ACC}</Project>
       <Name>Insights</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualStudio\VisualStudio.csproj">
-      <Project>{5cdbcef9-3b81-483a-8317-bd17bc1cf42c}</Project>
-      <Name>VisualStudio</Name>
+    <ProjectReference Include="..\Display\Display.csproj">
+      <Project>{9aa801d8-00dd-4eef-a443-bedaed9d079f}</Project>
+      <Name>Display</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

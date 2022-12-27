@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.Shell;
+using SLD.Insights.UI;
 using System;
 using System.Runtime.InteropServices;
 

@@ -3,10 +3,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
-using VisualStudio.Model;
 
-namespace VisualStudio
+namespace SLD.Insights.UI
 {
+	using Model;
+
 	/// <summary>
 	/// Interaction logic for InsightsWindowControl.
 	/// </summary>
