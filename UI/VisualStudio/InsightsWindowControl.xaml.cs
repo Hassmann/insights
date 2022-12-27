@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
+using VisualStudio.Model;
 
 namespace VisualStudio
 {
@@ -9,6 +10,8 @@ namespace VisualStudio
 	/// </summary>
 	public partial class InsightsWindowControl : UserControl
 	{
+		Log _log = new();
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InsightsWindowControl"/> class.
 		/// </summary>
@@ -16,6 +19,8 @@ namespace VisualStudio
 		{
 			this.InitializeComponent();
 		}
+
+
 
 		/// <summary>
 		/// Handles click on the button by displaying a message box.

@@ -13,9 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{E583D118-A7C8-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio", "UI\VisualStudio\VisualStudio.csproj", "{5CDBCEF9-3B81-483A-8317-BD17BC1CF42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insights.Broadcast", "Insights.Broadcast\Insights.Broadcast.csproj", "{FC81E56A-24F8-446F-A670-969D2FF2AAF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insights.Broadcast", "Insights.Broadcast\Insights.Broadcast.csproj", "{FC81E56A-24F8-446F-A670-969D2FF2AAF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastAndReceive", "Samples\BroadcastAndReceive\BroadcastAndReceive.csproj", "{1E484CD5-51AD-4060-94D9-32A8DF75CCCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroadcastAndReceive", "Samples\BroadcastAndReceive\BroadcastAndReceive.csproj", "{1E484CD5-51AD-4060-94D9-32A8DF75CCCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workbench", "UI\Workbench\Workbench.csproj", "{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,18 @@ Global
 		{1E484CD5-51AD-4060-94D9-32A8DF75CCCD}.Release|arm64.Build.0 = Release|Any CPU
 		{1E484CD5-51AD-4060-94D9-32A8DF75CCCD}.Release|x86.ActiveCfg = Release|Any CPU
 		{1E484CD5-51AD-4060-94D9-32A8DF75CCCD}.Release|x86.Build.0 = Release|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Debug|arm64.Build.0 = Debug|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Debug|x86.Build.0 = Debug|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Release|arm64.ActiveCfg = Release|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Release|arm64.Build.0 = Release|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +109,7 @@ Global
 		{62254ED4-9A7C-455A-8F17-76595E4096A7} = {C31D49D7-7548-40B0-BF89-0CA39C6729F5}
 		{5CDBCEF9-3B81-483A-8317-BD17BC1CF42C} = {E583D118-A7C8-4738-924F-8DB2EB7200EE}
 		{1E484CD5-51AD-4060-94D9-32A8DF75CCCD} = {C31D49D7-7548-40B0-BF89-0CA39C6729F5}
+		{D6490DAA-7792-41CE-A0A0-8FB7CA11CB57} = {E583D118-A7C8-4738-924F-8DB2EB7200EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FC459AB-32B3-44A1-B2B3-05067DB804B1}
