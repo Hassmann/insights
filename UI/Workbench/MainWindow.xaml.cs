@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SLD.Insights;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,18 @@ namespace Workbench
     /// </summary>
     public partial class MainWindow : Window
     {
+		static InsightsSource Insights = new InsightsSource("MainWindow")
+		{
+			DisplayLevel = TraceLevel.Verbose
+		};
+
         public MainWindow()
         {
             InitializeComponent();
+
+			InsightsSource.Insights.Subscribe(_display.Log);
+
+			Insights.Info("Insights subscribed to display");
         }
     }
 }
