@@ -1,6 +1,5 @@
 ﻿using NetMQ.Sockets;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -9,8 +8,8 @@ namespace SLD.Insights
 {
 	public class InsightsReceiver : IObservable<Insight>
 	{
-		private Subject<Insight> _insights = new();
-		private IPEndPoint _endpoint;
+		private readonly Subject<Insight> _insights = new();
+		private readonly IPEndPoint _endpoint;
 		private SubscriberSocket? _socket;
 
 		private InsightsReceiver(IPEndPoint endpoint)

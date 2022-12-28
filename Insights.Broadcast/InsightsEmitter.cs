@@ -1,10 +1,7 @@
 ﻿using NetMQ.Sockets;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,10 +9,9 @@ namespace SLD.Insights
 {
 	public class InsightsEmitter : IObserver<Insight>
 	{
-
-		ConcurrentQueue<Insight> _outbox = new();
-		ManualResetEventSlim _available = new();
-		private IPEndPoint _endpoint;
+		readonly ConcurrentQueue<Insight> _outbox = new();
+		readonly ManualResetEventSlim _available = new();
+		private readonly IPEndPoint _endpoint;
 
 		public InsightsEmitter(IPEndPoint endpoint)
 		{

@@ -15,7 +15,7 @@
 			|| (Sources is not null && Sources.Any());
 
 		public IEnumerable<string> ConfiguredSources
-			=> Enumerable.Concat( 
+			=> Enumerable.Concat(
 				Sources.IfAny().Select(source => source.Name),
 				Levels.IfAny().Select(level => level.Key)
 				)

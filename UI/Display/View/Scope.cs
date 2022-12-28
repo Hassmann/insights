@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace SLD.Insights.UI.View
 {
 	partial class Scope : UIElement
 	{
-		static InsightsSource Insights = new InsightsSource(nameof(Scope));
+		static readonly InsightsSource Insights = new InsightsSource(nameof(Scope));
 
 		const int lineLength = 10;
 

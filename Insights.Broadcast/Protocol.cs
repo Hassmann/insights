@@ -1,12 +1,7 @@
 ﻿using NetMQ;
 using NetMQ.Sockets;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.Sockets;
-using System.Net.WebSockets;
-using System.ServiceModel.Channels;
-using System.Text;
 
 namespace SLD.Insights
 {

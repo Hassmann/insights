@@ -1,7 +1,4 @@
-﻿using SLD.Insights;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Windows;
+﻿using System;
 using System.Windows.Controls;
 
 namespace SLD.Insights.UI
@@ -13,7 +10,7 @@ namespace SLD.Insights.UI
 	/// </summary>
 	public partial class InsightsWindowControl : UserControl
 	{
-		Log _log = new Log();
+		readonly Log _log = new Log();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InsightsWindowControl"/> class.
