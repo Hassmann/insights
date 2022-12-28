@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace SLD.Insights.UI.View
 {
-	class Scope : UIElement
+	partial class Scope : UIElement
 	{
 		static InsightsSource Insights = new InsightsSource(nameof(Scope));
 
@@ -31,14 +31,23 @@ namespace SLD.Insights.UI.View
 		{
 			Insights.Trace($"Measure: {availableSize}");
 
-			return new Size(lineLength, lineLength);
+			// Take all we have
+			return availableSize;
 		}
 
 		protected override void OnRender(DrawingContext dc)
 		{
 			Insights.Trace("Render");
 
-			dc.DrawLine(new Pen(new SolidColorBrush(Colors.Black), 3), new Point(), new Point(lineLength, lineLength));
+			Render(dc);
 		}
+
+		#region Draw
+
+
+
+
+
+		#endregion
 	}
 }
