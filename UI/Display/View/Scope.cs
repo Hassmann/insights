@@ -10,21 +10,33 @@ namespace SLD.Insights.UI.View
 {
 	class Scope : UIElement
 	{
+		static InsightsSource Insights = new InsightsSource(nameof(Scope));
+
 		const int lineLength = 10;
+
+		public Scope()
+		{
+		}
+
+		protected override void OnRenderSizeChanged(SizeChangedInfo info) => base.OnRenderSizeChanged(info);
 
 		protected override void ArrangeCore(Rect finalRect)
 		{
+			Insights.Trace($"Arrange: {finalRect}");
+
 			base.ArrangeCore(finalRect);
 		}
 
 		protected override Size MeasureCore(Size availableSize)
 		{
+			Insights.Trace($"Measure: {availableSize}");
+
 			return new Size(lineLength, lineLength);
 		}
 
 		protected override void OnRender(DrawingContext dc)
 		{
-			base.OnRender(dc);
+			Insights.Trace("Render");
 
 			dc.DrawLine(new Pen(new SolidColorBrush(Colors.Black), 3), new Point(), new Point(lineLength, lineLength));
 		}
