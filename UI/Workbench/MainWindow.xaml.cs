@@ -1,6 +1,7 @@
 ﻿using SLD.Insights;
 using System.Diagnostics;
 using System.Windows;
+using Workbench.ViewModels;
 
 namespace Workbench
 {
@@ -14,13 +15,13 @@ namespace Workbench
 			DisplayLevel = TraceLevel.Verbose
 		};
 
+		public MainVM ViewModel { get; }
+
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			InsightsSource.Insights.Subscribe(_display.Log);
-
-			Insights.Info("Insights subscribed to display");
+			ViewModel = new MainVM();
 		}
 	}
 }

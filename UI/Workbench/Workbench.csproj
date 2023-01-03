@@ -56,6 +56,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Sources\PeriodicSource.cs" />
+    <Compile Include="ViewModels\MainVM.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,12 +111,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ReactiveUI">
+      <Version>18.4.1</Version>
+    </PackageReference>
     <PackageReference Include="System.Diagnostics.DiagnosticSource">
       <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Application\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

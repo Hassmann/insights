@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SLD.Insights.UI.Model
 {
-	class Log : IObserver<Insight>
+	public class Log : IObserver<Insight>
 	{
 		readonly List<Insight> _insights = new List<Insight>();
 
