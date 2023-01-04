@@ -15,7 +15,7 @@ namespace SLD.Insights.Output
 
 		private const char divider = '|';
 
-		private static ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+		private static readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
 		public static void Write(Insight insight)
 			=> Write(ToTrace(insight));

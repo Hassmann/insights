@@ -49,7 +49,6 @@ namespace SLD.Insights
 			AllListeners.Subscribe(OnSourceRegistered);
 		}
 
-		// Insert Pause indicators
 		public static IObservable<Insight> Insights
 			=> _sink.Select(pair => pair.Value as Insight);
 

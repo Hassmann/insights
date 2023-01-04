@@ -1,8 +1,6 @@
 ﻿namespace SLD.Insights.Output
 {
 	using Configuration;
-	using System.Threading;
-	using System.Threading.Tasks;
 
 	public class TraceObserver : IObserver<Insight>
 	{
