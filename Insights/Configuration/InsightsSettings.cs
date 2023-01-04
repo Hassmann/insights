@@ -10,6 +10,8 @@
 
 		public TraceLevel DefaultLevel { get; set; } = TraceLevel.Warning;
 
+		public TimeSpan IdleThreshold { get; set; } = TimeSpan.FromSeconds(3);
+
 		public bool HasSources
 			=> (Levels is not null && Levels.Any())
 			|| (Sources is not null && Sources.Any());

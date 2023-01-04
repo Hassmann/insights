@@ -43,8 +43,7 @@ namespace SLD.Insights
 			// Infos
 			TraceSelf($"BasePath: {BasePath}");
 
-			// Listen to insights
-			Insights.Subscribe(new TraceObserver(settings));
+			SubscribeToOutput(settings);
 
 			// Listen to source registrations
 			AllListeners.Subscribe(OnSourceRegistered);
@@ -69,6 +68,14 @@ namespace SLD.Insights
 			{
 				ApplySourceLevel(pair.Key, pair.Value);
 			}
+		}
+
+		private static void SubscribeToOutput(InsightsSettings settings)
+		{
+			var output = new TraceObserver(settings);
+
+			Insights
+				.Subscribe(output);
 		}
 
 		private static void SetDisplayLevel(InsightsSource source, TraceLevel level)
