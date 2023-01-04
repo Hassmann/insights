@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Threading;
 
 namespace SLD.Insights.Output
 {
@@ -14,12 +15,10 @@ namespace SLD.Insights.Output
 
 		private const char divider = '|';
 
-		public static void Write(Insight insight)
-		{
-			string line = ToTrace(insight);
+		private static readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
-			Trace.WriteLine(line);
-		}
+		public static void Write(Insight insight)
+			=> Write(ToTrace(insight));
 
 		public static string ToTrace(this Insight insight)
 		{
@@ -108,6 +107,13 @@ namespace SLD.Insights.Output
 
 				return output.ToString();
 			}
+		}
+
+		internal static void Write(string line)
+		{
+			_lock.EnterWriteLock();
+			Trace.WriteLine(line);
+			_lock.ExitWriteLock();
 		}
 
 		private static string Indent(int indent, [Localizable(false)] string text, params object[] parameters)
