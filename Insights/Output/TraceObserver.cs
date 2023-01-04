@@ -1,10 +1,14 @@
 ﻿namespace SLD.Insights.Output
 {
 	using Configuration;
+	using System.Threading;
+	using System.Threading.Tasks;
 
 	public class TraceObserver : IObserver<Insight>
 	{
 		private readonly InsightsSettings _settings;
+
+		private DateTimeOffset _lastTimestamp = DateTimeOffset.MaxValue;
 
 		public TraceObserver(InsightsSettings settings)
 		{
@@ -28,6 +32,13 @@
 
 		public void OnNext(Insight insight)
 		{
+			if (insight.TimeStamp - _lastTimestamp > _settings.IdleThreshold)
+			{
+				TraceOutput.Write("---");
+			}
+
+			_lastTimestamp = insight.TimeStamp;
+
 			TraceOutput.Write(insight);
 
 			if (insight.Exception != null && _settings.DumpExceptions)
