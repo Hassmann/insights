@@ -1,26 +1,16 @@
 ﻿using SLD.Insights;
-using SLD.Insights.UI.Model;
-using Splat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SLD.Insights.UI.ViewModels;
 
 namespace Workbench.ViewModels
 {
+	using Sources;
+
 	public class MainVM : ViewModel
 	{
-		static InsightsSource Insights = new InsightsSource("Main");
+		private static InsightsSource Insights = new InsightsSource("Main");
 
-		public MainVM()
-		{
-			InsightsSource.Insights.Subscribe(Log);
+		public PeriodicSource Periodic { get; } = new PeriodicSource();
 
-			Insights.Info("Insights subscribed to display");
-
-		}
-
-		public Log Log { get; } = new Log();
+		public LogVM Log { get; } = new LogVM();
 	}
 }

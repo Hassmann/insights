@@ -13,7 +13,8 @@ namespace SLD.Insights.UI.View
 		{
 		}
 
-		protected override void OnRenderSizeChanged(SizeChangedInfo info) => base.OnRenderSizeChanged(info);
+		protected override void OnRenderSizeChanged(SizeChangedInfo info) 
+			=> base.OnRenderSizeChanged(info);
 
 		protected override void ArrangeCore(Rect finalRect)
 		{
@@ -37,12 +38,5 @@ namespace SLD.Insights.UI.View
 			Render(dc);
 		}
 
-		#region Draw
-
-
-
-
-
-		#endregion
 	}
 }
