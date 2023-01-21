@@ -1,6 +1,6 @@
 ﻿namespace SLD.Insights
 {
-	[DebuggerDisplay("\"{Name}\" ({DisplayLevel}),nq")]
+	[DebuggerDisplay("{Name} ({DisplayLevel,nq})")]
 	public partial class InsightsSource : DiagnosticListener
 	{
 		private const string InsightName = null;
