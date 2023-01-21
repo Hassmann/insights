@@ -10,10 +10,10 @@
 		}
 
 		public TraceLevel Level { get; }
-		public DateTimeOffset TimeStamp { get; } = DateTimeOffset.Now;
-		public bool IsHighlight { get; internal set; }
+		public DateTimeOffset TimeStamp { get; set; } = DateTimeOffset.Now;
+		public bool IsHighlight { get; set; }
 
-		public string Source { get; internal set; }
+		public string Source { get; set; }
 		public string Text { get; set; }
 		public object[] Payload { get; set; }
 
@@ -24,5 +24,8 @@
 
 		public bool IsError
 			=> Level == TraceLevel.Error;
+
+		public override string ToString()
+			=> $"{Source}: {Text}";
 	}
 }
