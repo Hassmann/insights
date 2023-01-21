@@ -34,6 +34,8 @@ namespace VisualStudio
 		/// </summary>
 		public const string PackageGuidString = "59096bca-76dc-498b-9366-dda18093db96";
 
+		System.Diagnostics.DiagnosticSource _dummy;
+
 		#region Package Members
 
 		/// <summary>
