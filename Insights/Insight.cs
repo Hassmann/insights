@@ -1,5 +1,8 @@
 ﻿namespace SLD.Insights
 {
+	using Output;
+
+	[DebuggerDisplay("{Source, nq} | {Text, nq}")]
 	public class Insight
 	{
 		internal const TraceLevel DefaultLevel = TraceLevel.Info;
@@ -11,6 +14,8 @@
 
 		public TraceLevel Level { get; }
 		public DateTimeOffset TimeStamp { get; } = DateTimeOffset.Now;
+
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		public bool IsHighlight { get; internal set; }
 
 		public string Source { get; internal set; }
@@ -22,6 +27,7 @@
 		public TimeSpan Time
 			=> TimeStamp - InsightsSource.StartTime;
 
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		public bool IsError
 			=> Level == TraceLevel.Error;
 	}
