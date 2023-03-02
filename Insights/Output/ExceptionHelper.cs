@@ -13,14 +13,14 @@ namespace SLD.Insights.Output
 				return;
 			}
 
-			if (ex.TargetSite != null)
+			if (ex.TargetSite is not null)
 			{
-				AssemblyName = ex.TargetSite.Module.Assembly.GetName().Name;
-				TypeName = ex.TargetSite.DeclaringType.Name;
+				AssemblyName = ex.TargetSite.Module?.Assembly?.GetName().Name;
+				TypeName = ex.TargetSite.DeclaringType?.Name;
 				MethodName = ex.TargetSite.Name;
 			}
 
-			if (ex.StackTrace != null)
+			if (ex.StackTrace is not null)
 			{
 				FileName = ParseFileName(ex);
 				LineNumber = ParseLineNumber(ex);
@@ -30,51 +30,27 @@ namespace SLD.Insights.Output
 
 			ExceptionMessage = ex.Message;
 
-			if (ex.InnerException != null)
+			if (ex.InnerException is not null)
 			{
 				Inner = new ExceptionHelper(ex.InnerException);
 			}
 		}
 
-		public ExceptionHelper Inner
-		{
-			get; private set;
-		}
+		public ExceptionHelper Inner { get; }
 
-		public int LineNumber
-		{
-			get; private set;
-		}
+		public int LineNumber { get; }
 
-		public string AssemblyName
-		{
-			get; private set;
-		}
+		public string AssemblyName { get; }
 
-		public string FileName
-		{
-			get; private set;
-		}
+		public string FileName { get; }
 
-		public string TypeName
-		{
-			get; private set;
-		}
+		public string TypeName { get; }
 
-		public string MethodName
-		{
-			get; private set;
-		}
+		public string MethodName { get; }
 
-		public string ExceptionName
-		{
-			get; private set;
-		}
+		public string ExceptionName { get; }
 
-		public string ExceptionMessage
-		{
-			get; private set;
-		}
+		public string ExceptionMessage { get; }
 
 		private static string ParseFileName(Exception ex)
 		{
@@ -87,7 +63,7 @@ namespace SLD.Insights.Output
 
 			string originalLine = ex.StackTrace.Substring(0, originalLineIndex);
 			string[] sections = originalLine.Split('\\');
-			return sections.Last();
+			return sections.LastOrDefault();
 		}
 
 		private static int ParseLineNumber(Exception ex)
