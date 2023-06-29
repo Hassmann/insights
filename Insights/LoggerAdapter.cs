@@ -13,10 +13,10 @@ namespace SLD.Insights
 		}
 
 		public void Log<TState>(
-			LogLevel logLevel, 
-			EventId eventId, 
-			TState state, 
-			Exception exception, 
+			LogLevel logLevel,
+			EventId eventId,
+			TState state,
+			Exception exception,
 			Func<TState, Exception, string> formatter
 		)
 		{
