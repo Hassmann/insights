@@ -1,4 +1,6 @@
-﻿namespace SLD.Insights
+﻿using Microsoft.Extensions.Logging;
+
+namespace SLD.Insights
 {
 	[DebuggerDisplay("{Name} ({DisplayLevel,nq})")]
 	public partial class InsightsSource : DiagnosticListener
@@ -100,11 +102,14 @@
 		}
 
 		private Insight Create(TraceLevel level, string text, Exception exception = null, object[] payload = null)
-					=> new Insight(level)
-					{
-						Text = text,
-						Payload = payload,
-						Exception = exception
-					};
+			=> new Insight(level)
+			{
+				Text = text,
+				Payload = payload,
+				Exception = exception
+			};
+
+		public ILogger AsLogger
+			=> new LoggerAdapter(this);
 	}
 }

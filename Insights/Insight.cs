@@ -1,7 +1,5 @@
 ﻿namespace SLD.Insights
 {
-	using Output;
-
 	[DebuggerDisplay("{Source, nq} | {Text, nq}")]
 	public class Insight
 	{

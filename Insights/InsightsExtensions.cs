@@ -1,4 +1,6 @@
-﻿namespace SLD.Insights
+﻿using System.Runtime.CompilerServices;
+
+namespace SLD.Insights
 {
 	public static class InsightsExtensions
 	{
@@ -38,6 +40,9 @@
 			=> new TraceObservable<T>(source, insights, name);
 
 		public static IEnumerable<T> IfAny<T>(this IEnumerable<T> source)
-			=> source is not null && source.Any() ? source : Enumerable.Empty<T>();
+			=> source is not null ? source : Enumerable.Empty<T>();
+
+		public static void TraceMember(this InsightsSource insights, [CallerMemberName] string memberName = null)
+			=> insights.Trace(memberName);
 	}
 }
