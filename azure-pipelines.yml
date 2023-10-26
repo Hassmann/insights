@@ -17,6 +17,7 @@ stages:
     - template: BuildLibrary.yml@templates
       parameters:
         packagesToPack: '**/Insights.csproj'
+        versionValue: '$(ProductVersion)'    
 
   - stage: PublishInternal
     displayName: Publish internally
