@@ -109,7 +109,10 @@ namespace SLD.Insights
 				Exception = exception
 			};
 
-		public ILogger AsLogger
+		public ILogger AsLogger()
 			=> new LoggerAdapter(this);
+
+		public ILogger<T> AsLogger<T>()
+			=> new LoggerAdapter<T>(this);
 	}
 }

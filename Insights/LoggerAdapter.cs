@@ -54,4 +54,11 @@ namespace SLD.Insights
 			return Disposable.Create(() => _source.Trace($"End Scope: {state}"));
 		}
 	}
+
+	internal class LoggerAdapter<T> : LoggerAdapter, ILogger<T>
+	{
+		public LoggerAdapter(InsightsSource source) : base(source)
+		{
+		}
+	}
 }
