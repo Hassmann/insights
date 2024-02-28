@@ -16,6 +16,13 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageIcon>SLD-Software-Nuget.png</PackageIcon>
 		<LangVersion>10</LangVersion>
+
+
+		<IncludeSymbols>True</IncludeSymbols>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>embedded</DebugType>
+		<EmbedAllSources>true</EmbedAllSources>
+
 	</PropertyGroup>
 
 	<ItemGroup>
